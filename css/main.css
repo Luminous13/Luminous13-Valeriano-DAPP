@@ -1,0 +1,24 @@
+body {
+	background: url("https://ipfs.io/ipfs/QmYqhzUkTY5XiSGwPa254dUSneixApDvTduCxaRCTE9T2k") center center no-repeat;
+	background-size: cover;
+}
+
+.container {
+	height: 100vh;
+	opacity: 0.8;
+}
+
+.footer {
+	height: 100px;
+}
+
+.navbar img {
+	width: 50px;
+	height: 50px;
+}
+
+.navbar li {
+	padding: 15px;
+	font-size: 20px;
+	font-weight: bold;
+}
