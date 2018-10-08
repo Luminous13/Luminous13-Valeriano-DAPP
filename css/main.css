@@ -4,8 +4,9 @@ body {
 }
 
 .container {
+
 	height: 100vh;
-	opacity: 0.8;
+	opacity: 0.9;
 }
 
 .footer {
@@ -18,7 +19,66 @@ body {
 }
 
 .navbar li {
-	padding: 15px;
-	font-size: 20px;
+	padding: 10px;
+	font-size: 18px;
 	font-weight: bold;
+	/* margin-left: 10px; */
+}
+
+#tokenImg {
+	width: 30px;
+	height: 30px;
+}
+
+.modal-body img {
+	height: 150px;
+	width: 150px;
+}
+
+.middle {
+	position: absolute;
+	top: 35%;
+	left: 13.5%;
+	display: none;
+}
+
+#secondBuy {
+	left: 46%;
+}
+
+#thirdBuy {
+	left: 79%;
+}
+
+.modal-body button:hover img {
+	opacity: 0.3;
+}
+
+.modal-body button:hover .middle {
+	display: inline;
+}
+
+#three {
+	width: 200px;
+}
+
+.modal-body button {
+	width: 300px;
+	background-color: #66f9ed;
+}
+
+.modal-content {
+	margin-left: -50%;
+	/* transform: translate(-50%, -50%); */
+	width: 1000px;
+}
+
+.navbar img {
+  border-radius: 50%;
+  -webkit-transition: -webkit-transform .8s ease-in-out;
+          transition:         transform .8s ease-in-out;
+}
+.navbar img:hover {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
 }
