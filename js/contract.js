@@ -31,7 +31,7 @@ $(document).ready(function($) {
 
 	}
 
-	$(".btn").click(function() {
+	$(".buyingToken").click(function() {
 		var numTokens = $(this).find('h3').text().replace(" Tokens!", "");
 		var price = $(this).find('h5').text().replace(" ether", "");
 		price = price * 10**18;
@@ -73,7 +73,7 @@ $(document).ready(function($) {
 			.then(function(Match) {
 
 				if (Match.winner) {
-					$("#tableContent").append(`<tr><td>${Match.teamA}</td><td>vs.</td><td>${Match.teamB}</td><td><a href="${Match.matchLink}" class="btn btn-primary">Show Link</a></td><td><button class="btn btn-primary">Bet</button></td></tr>`);
+					$("#tableContent").append(`<tr><td>${Match.teamA}</td><td>vs.</td><td>${Match.teamB}</td><td><a href="${Match.matchLink}" class="btn btn-primary">Show Link</a></td><td><button class="btn btn-primary makeBet">Bet</button></td></tr>`);
 				}
 			});
 		}

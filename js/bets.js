@@ -6,4 +6,8 @@ $(document).ready(function($) {
 		$(".mainContent").fadeIn('slow');
 	});
 
+	$(".makeBet").click(function(event) {
+		
+	});
+
 });

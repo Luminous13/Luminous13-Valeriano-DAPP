@@ -26,7 +26,7 @@
 	<div class="container bg-dark">
 		
 		<div class="mainContent">
-			<?php include 'table.html'; ?>
+			<?php include 'home.html'; ?>
 		</div>
 		
 
@@ -46,21 +46,21 @@
 				
 				<div class="modal-body mx-auto">
 					
-					<button class="btn">
+					<button class="btn buyingToken">
 						<h5 class="font-weight-bold" id="price1"></h5>
 						<img src="https://ipfs.io/ipfs/QmYn7vre7x352AiiFAhLbwu1SjJDhvgrHdHfc9cQ7Ajxwa" alt="Token">
 						<h2 class="middle font-weight-bold">BUY!</h2>
 						<h3 class="font-weight-bold">5 Tokens!</h3>
 					</button>
 
-					<button class="btn">
+					<button class="btn buyingToken">
 						<h5 class="font-weight-bold" id="price2"></h5>
 						<img id="three" src="https://ipfs.io/ipfs/QmSt7S75fEh4DYSWEPG8GA1xL5Abjq96z4tZuRd3NhpML1" alt="Token">
 						<h2 class="middle font-weight-bold" id="secondBuy">BUY!</h2>
 						<h3 class="font-weight-bold">20 Tokens!</h3>
 					</button>
 
-					<button class="btn">
+					<button class="btn buyingToken">
 						<h5 class="font-weight-bold" id="price3"></h5>
 						<img src="https://ipfs.io/ipfs/QmY8cQdu4wne4yQdjE3drbeozNxEwJTySfzbPCKvPq1naG" alt="Token">
 						<h2 class="middle font-weight-bold" id="thirdBuy">BUY!</h2>
