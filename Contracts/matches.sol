@@ -24,9 +24,9 @@ contract Tokens {
         priceOfTokens = _newPrice;
     }
     
-    function buyTokens(uint _numTokens) public payable {
-        accounts[msg.sender] += _numTokens;
-        
+    function buyTokens() public payable {
+        uint256 numTokens = msg.value / priceOfTokens;
+        accounts[msg.sender] += numTokens;
     }
     
     function getTokens(address _userAddress) public view returns(uint _balance){
