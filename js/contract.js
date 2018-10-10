@@ -52,7 +52,7 @@ $(document).ready(function($) {
 		    getTokens().then(displayTokens);
 		        
 		})
-		.on("error", function(receipt) {
+		.on("error", function(error) {
 
 		    $.notify("Tokens unsuccessfully bought!", {position: "top center", className: "error"});
 		        
@@ -72,8 +72,8 @@ $(document).ready(function($) {
 			getMatchDetails(id)
 			.then(function(Match) {
 
-				if (Match.winner) {
-					$("#tableContent").append(`<tr><td>${Match.teamA}</td><td>vs.</td><td>${Match.teamB}</td><td><a href="${Match.matchLink}" class="btn btn-primary">Show Link</a></td><td><button class="btn btn-primary makeBet">Bet</button></td></tr>`);
+				if (Match.winner == 0) {
+					$("#tableContent").append(`<tr><td><span class="teamA">${Match.teamA}</span></td><td>vs.</td><td><span class="teamB">${Match.teamB}</span></td><td><a href="${Match.matchLink}" class="btn btn-primary matchLinkForbet">Show Link</a></td><td><button class="btn btn-primary makeBetBtn" data-toggle="modal" data-target="#makeBet">Bet</button></td></tr>`);
 				}
 			});
 		}
@@ -99,12 +99,56 @@ $(document).ready(function($) {
 		return Ezbet.methods.getTokenPrice().call();
 	}
 
+	function placeBet(_matchLink, _team, _tokens)
+	{
+		$.notify("Placing bet.. This may take a while", {position: "top center", className: "info"});
+		
+		return Ezbet.methods.betOnTeam(userAccount, _matchLink, _team, _tokens)
+		.send({from: userAccount})
+		.on("receipt", function(receipt) {
+			$.notify("Successfully placed Bet!", {position: "top center", className: "success"});
+		})
+		.on("error", function(error) {
+			$.notify("Error placing bet", {position: "top center", className: "error"});
+		});
+	}
+
 	$("#linkBets").click(function(event) {
 		$(".mainContent").hide();
 		$(".mainContent").load("table.html");
 		getAllMatches()
 		.then(displayAllMatches)
 		.then($(".mainContent").fadeIn('slow'));
+		
+	});
+
+	$("table").delegate(".btn", "click", function(){
+	    var teamA = $(this).parent().siblings().find('.teamA').text();
+	    var teamB = $(this).parent().siblings().find('.teamB').text();
+	    var matchLink = $(this).parent().siblings().find('.matchLinkForbet').attr('href');
+
+
+	    $("#makeBet span.matchLink").text(matchLink);
+	    $("#makeBet span.teamA").text(teamA);
+	    $("#makeBet span.teamB").text(teamB);
+
+	});
+
+	$("#betNow").click(function(event) {
+
+		var matchLink = $(this).parent().siblings().find('.matchLink').text();
+		var _tokens = $(this).parent().siblings().find("#tokensBetted").val();
+		var _tokenAmount = $("#tokenCount").text();
+
+		if (_tokens <= _tokenAmount) {
+			if ($(this).parent().siblings().find('#betOnTeamA').is(':checked')) {
+				placeBet(matchLink, 1, _tokens);			
+			}
+			else {
+				placeBet(matchLink, 2, _tokens);
+			}
+		}
+
 		
 	});
 

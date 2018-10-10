@@ -10,11 +10,11 @@
 	<script src="./js/popper.min.js" type="text/javascript"></script>
 	<script src="./js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="./js/notify.min.js" type="text/javascript"></script>
-	<script src="./js/index.js" type="text/javascript"></script>
 	<script src="./js/web3.min.js" type="text/javascript"></script>
 	<script src="./js/contract.js" type="text/javascript"></script>
 	<script src="./js/abi.js" type="text/javascript"></script>
 	<script src="./js/bets.js" type="text/javascript"></script>
+	<script src="./js/index.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="navHolder">
@@ -25,14 +25,14 @@
 	
 	<div class="container bg-dark">
 		
-		<div class="mainContent">
-			<?php include 'home.html'; ?>
+		<div class="mainContent" id="tableholder">
+			<?php include 'table.html'; ?>
 		</div>
 		
 
 	</div>
 
-	<!-- MODAL -->
+	<!-- MODAL FOR BUYING TOKEN -->
 	<div class="modal fade" id="buyToken">
 	
 		<div class="modal-dialog">
@@ -78,6 +78,58 @@
 
 	</div>
 
+	<!-- MODAL FOR MAKING A BET -->
+	<div class="modal fade" id="makeBet">
+	
+		<div class="modal-dialog">
+			
+			<div class="modal-content" id="makeABetModal">
+
+				<div class="modal-header">
+					<h4 class="font-weight-bold text-center">Make a Bet!</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+				<div class="modal-body mx-auto">
+					
+					<div><span class="matchLink"></span></div>
+
+					<div class="form-group">
+						<div class="form-check">
+						  	<label class="form-check-label">
+						    	<input type="radio" class="form-check-input" name="optradio" id="betOnTeamA"><span class="teamA"></span>
+						  	</label>
+						</div>
+						<div class="form-check">
+							<label class="form-check-label">
+						    	<input type="radio" class="form-check-input" name="optradio" id="betOnTeamB"><span class="teamB"></span>
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+					
+						<input class="form-control" type="text" id="tokensBetted">
+
+					</div>
+
+					<div class="form-group text-white">
+						<button class="btn btn-success bg-success form-control" id="betNow">Make A Bet!</button>
+					</div>
+
+				</div>
+				
+				<div class="modal-footer mx-auto">
+					<h6 class="">You can also Donate Eth to: <strong>0x4b46cacf94ea1eb93cd7eaac5ef4ce5f354a63cd</strong></h6>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- FOOTER -->
 	<div id="footerholder">
 		
 		<?php include 'footer.html'; ?>

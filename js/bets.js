@@ -6,8 +6,10 @@ $(document).ready(function($) {
 		$(".mainContent").fadeIn('slow');
 	});
 
-	$(".makeBet").click(function(event) {
-		
+	$("#linkHome").click(function(event) {
+		$(".mainContent").hide();
+		$(".mainContent").load("home.html");
+		$(".mainContent").fadeIn('slow');
 	});
 
 });
