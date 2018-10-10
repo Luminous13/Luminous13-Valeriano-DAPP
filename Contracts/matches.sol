@@ -2,8 +2,8 @@ pragma solidity ^0.4.24;
 
 contract Tokens {
     
-    address owner;
-    uint256 priceOfTokens = 0.001 ether;
+    address public owner;
+    uint256 public priceOfTokens = 0.001 ether;
     
     constructor() public {
         owner = msg.sender;
