@@ -167,5 +167,44 @@ $(document).ready(function($) {
 	    startApp()
 	})
 
+	//add
+	function addMatch(teamA, _teamB, _matchLink)
+	{
+		$.notify("Adding match....", {position: "top center", className: "info"});
+		return Ezbet.methods.addMatch(_matchLink, teamA, _teamB)
+		.send({from: userAccount})
+		.on("receipt", function(receipt) {
+			$.notify("Successfully created match!", {position: "top center", className: "success"});
+		})
+		.on("error", function(error) {
+			$.notify("Error creating match", {position: "top center", className: "error"});
+		});
+	}
+
+	$("#btnCreateMatch").click(function(event) {
+	  var teamA = $("#teamA").val();
+      var teamB = $("#teamB").val();
+      var matchLink = $("#matchLink").val();
+      addMatch(teamA, teamB, matchLink);
+	});
+
+	function setWinner(_winner,_matchLink)
+	{
+		$.notify("Configuring winner....", {position: "top center", className: "info"});
+		return Ezbet.methods.betConclude(_matchLink, _winner)
+		.send({from: userAccount})
+		.on("receipt", function(receipt) {
+			$.notify("Configured winner", {position: "top center", className: "success"});
+		})
+		.on("error", function(error) {
+			$.notify("Error configuring winner", {position: "top center", className: "error"});
+		});
+	}
+
+	$("#btnSetWin").click(function(event) {
+	  var winner = $("#winner").val();
+      var matchLink = $("#matchLinkWin").val();
+      setWinner(winner, matchLink);
+	});
 
 });

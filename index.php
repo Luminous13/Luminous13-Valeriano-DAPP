@@ -68,7 +68,6 @@
 					</button>
 
 				</div>
-				
 				<div class="modal-footer mx-auto">
 					<h6 class="">You can also Donate Eth to: <strong>0x4b46cacf94ea1eb93cd7eaac5ef4ce5f354a63cd</strong></h6>
 				</div>
@@ -127,8 +126,6 @@
 		</div>
 
 	</div>
-
-
 	<!-- FOOTER -->
 	<div id="footerholder">
 		
