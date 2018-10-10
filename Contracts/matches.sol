@@ -93,15 +93,16 @@ contract Bet is Matches {
     
     function updateBetsDistributePrize(uint8 _winner, string _matchLink) internal {
         for (uint i = 0; i < betList.length; i++) {
-            
-            if (keccak256(abi.encodePacked(betList[i].matchLink)) == keccak256(abi.encodePacked(_matchLink))) {
+            Bets storage bet = betList[i];
+
+            if (keccak256(abi.encodePacked(bet.matchLink)) == keccak256(abi.encodePacked(_matchLink))) {
                 
-                if (betList[i].teamBetted == _winner) {
-                    accounts[betList[i].betterAddress] += betList[i].tokensBetted * 2;
-                    betList[i].status = 1;
+                if (bet.teamBetted == _winner) {
+                    accounts[bet.betterAddress] += bet.tokensBetted * 2;
+                    bet.status = 1;
                 }
                 else {
-                    betList[i].status = 2;
+                    bet.status = 2;
                 }
                 
                 
