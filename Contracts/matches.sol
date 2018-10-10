@@ -2,8 +2,8 @@ pragma solidity ^0.4.24;
 
 contract Tokens {
     
-    address owner;
-    uint priceOfTokens = 0.001 ether;
+    address public owner;
+    uint256 public priceOfTokens = 0.001 ether;
     
     constructor() public {
         owner = msg.sender;
@@ -14,22 +14,22 @@ contract Tokens {
         _;
     }
     
-    mapping (address => uint) public accounts;
+    mapping (address => uint256) public accounts;
     
-    function getTokenPrice() view public returns(uint _price) {
+    function getTokenPrice() view public returns(uint256 _price) {
         _price = priceOfTokens;
     }
     
-    function setTokenPrice(uint _newPrice) public onlyOwner {
+    function setTokenPrice(uint256 _newPrice) public onlyOwner {
         priceOfTokens = _newPrice;
     }
     
-    function buyTokens(uint _numTokens) public payable {
-        accounts[msg.sender] += _numTokens;
-        
+    function buyTokens() public payable {
+        uint256 numTokens = msg.value / priceOfTokens;
+        accounts[msg.sender] += numTokens;
     }
     
-    function getTokens(address _userAddress) public view returns(uint _balance){
+    function getTokens(address _userAddress) public view returns(uint256 _balance){
         _balance = accounts[_userAddress];
     }
 }
@@ -45,16 +45,16 @@ contract Matches is Tokens {
     
     Match[] public matches;
     
-    mapping (string => uint) internal matchIndex;
+    mapping (string => uint256) internal matchIndex;
     
     function addMatch(string _matchLink, string _teamA, string _teamB) public onlyOwner {
-        uint id = matches.push(Match(_matchLink, _teamA, _teamB, 0)) - 1;
+        uint256 id = matches.push(Match(_matchLink, _teamA, _teamB, 0)) - 1;
         matchIndex[_matchLink] = id;
     }
     
-    function getAllMatches() external view returns(uint[] memory result) {
-        result = new uint[](matches.length);
-        for (uint i = 0; i < matches.length; i++) {
+    function getAllMatches() external view returns(uint256[] memory result) {
+        result = new uint256[](matches.length);
+        for (uint256 i = 0; i < matches.length; i++) {
             result[i] = i;
         }
     }
@@ -71,20 +71,20 @@ contract Bet is Matches {
         address betterAddress;
         string matchLink;
         uint8 teamBetted;
-        uint tokensBetted;
+        uint256 tokensBetted;
         uint8 status;
     }
     
     Bets[] public betList;
     
-    function betOnTeam(address _betterAddress, string _matchLink, uint8 _team,  uint _tokens) public {
+    function betOnTeam(address _betterAddress, string _matchLink, uint8 _team,  uint256 _tokens) public {
         betList.push(Bets(_betterAddress, _matchLink, _team, _tokens, 0));
         accounts[_betterAddress] -= _tokens;
     }
     
-    function getUserBets(address _address) view external returns(uint[] result) {
-        result = new uint[](betList.length);
-        for (uint i = 0; i < betList.length; i++) {
+    function getUserBets(address _address) view external returns(uint256[] result) {
+        result = new uint256[](betList.length);
+        for (uint256 i = 0; i < betList.length; i++) {
             if (betList[i].betterAddress == _address) {
                 result[i] = i;
             }
@@ -92,16 +92,17 @@ contract Bet is Matches {
     }
     
     function updateBetsDistributePrize(uint8 _winner, string _matchLink) internal {
-        for (uint i = 0; i < betList.length; i++) {
-            
-            if (keccak256(abi.encodePacked(betList[i].matchLink)) == keccak256(abi.encodePacked(_matchLink))) {
+        for (uint256 i = 0; i < betList.length; i++) {
+            Bets storage bet = betList[i];
+
+            if (keccak256(abi.encodePacked(bet.matchLink)) == keccak256(abi.encodePacked(_matchLink))) {
                 
-                if (betList[i].teamBetted == _winner) {
-                    accounts[betList[i].betterAddress] += betList[i].tokensBetted * 2;
-                    betList[i].status = 1;
+                if (bet.teamBetted == _winner) {
+                    accounts[bet.betterAddress] += bet.tokensBetted * 2;
+                    bet.status = 1;
                 }
                 else {
-                    betList[i].status = 2;
+                    bet.status = 2;
                 }
                 
                 
