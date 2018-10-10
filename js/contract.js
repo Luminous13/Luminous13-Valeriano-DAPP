@@ -27,8 +27,7 @@ $(document).ready(function($) {
 
 		getAllMatches().then(displayAllMatches);
 		getTokenPrice().then(setTokenPrice);
-		
-
+		getUserBets().then(displayUserBets);
 	}
 
 	$(".buyingToken").click(function() {
@@ -71,7 +70,6 @@ $(document).ready(function($) {
 		for (id of ids) {
 			getMatchDetails(id)
 			.then(function(Match) {
-
 				if (Match.winner == 0) {
 					$("#tableContent").append(`<tr><td><span class="teamA">${Match.teamA}</span></td><td>vs.</td><td><span class="teamB">${Match.teamB}</span></td><td><a href="${Match.matchLink}" class="btn btn-primary matchLinkForbet">Show Link</a></td><td><button class="btn btn-primary makeBetBtn" data-toggle="modal" data-target="#makeBet">Bet</button></td></tr>`);
 				}
@@ -79,8 +77,28 @@ $(document).ready(function($) {
 		}
 	}
 
-	function setTokenPrice(price) {
+	function displayUserBets(ids) {
+		for (id of ids) {
+			getBetDetails(id)
+			.then(function(Bets) {
+					var _status = "";
+					if (Bets.status == 1) {
+						_status = "WIN!";
+					}
+					else if (Bets.status == 2) {
+						_status = "LOSE!";
+					}
+					else {
+						_status = "Pending!";
+					}
 
+					$("#myBetsTableContent").append(`<tr><td><span class="teamBet">${Bets.teamBetted}</span></td><td><span class="tokensBet">${Bets.tokensBetted}</span></td><td><a href="${Bets.matchLink}" class="btn btn-primary matchLinkForbet">Show Link</a></td><td><span class="Status">${_status}</span></td>
+						</tr>`);
+			});
+		}
+	}
+
+	function setTokenPrice(price) {
 		var ether = price / 10**18;
 		$("#price1").text(ether + " ether");
 		$("#price2").text((ether * 3.5).toFixed(4) + " ether");
@@ -91,8 +109,16 @@ $(document).ready(function($) {
 		return Ezbet.methods.matches(id).call();
 	}
 
+	function getBetDetails(id) {
+		return Ezbet.methods.betList(id).call();
+	}
+
 	function getAllMatches() {
 		return Ezbet.methods.getAllMatches().call();
+	}
+
+	function getUserBets() {
+		return Ezbet.methods.getUserBets(userAccount).call();
 	}
 
 	function getTokenPrice() {
@@ -118,6 +144,15 @@ $(document).ready(function($) {
 		$(".mainContent").load("table.html");
 		getAllMatches()
 		.then(displayAllMatches)
+		.then($(".mainContent").fadeIn('slow'));
+		
+	});
+
+	$("#linkMyBets").click(function(event) {
+		$(".mainContent").hide();
+		$(".mainContent").load("myBets.html");
+		getUserBets()
+		.then(displayUserBets)
 		.then($(".mainContent").fadeIn('slow'));
 		
 	});

@@ -26,7 +26,7 @@
 	<div class="container bg-dark">
 		
 		<div class="mainContent" id="tableholder">
-			<?php include 'table.html'; ?>
+			<?php include 'home.html'; ?>
 		</div>
 		
 
